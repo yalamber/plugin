@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource';
 import App from './components/App.vue'
 import Dashboard from './components/Dashboard.vue'
 import Login from './components/Login.vue'
 import Record from './components/Record.vue'
 
 Vue.use(VueRouter)
-
+Vue.use(VueResource);
 
 
 const router = new VueRouter({
