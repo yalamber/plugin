@@ -40,7 +40,8 @@ export default {
                 chrome.windows.getCurrent(function (window) {
                     chrome.windows.update(window.id, { 
                         width: 300, 
-                        height: 150
+                        height: 200,
+                        left: screen.width - 300
                     });
                 });    
             });
