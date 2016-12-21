@@ -1,13 +1,13 @@
 <template>
 <div>
-  <div v-if="initTest">
+  <div v-if="generalInstructions">
     <p>General Instructions for test: {{testID}}</p>
-    <a class="waves-effect waves-light btn-flat" v-on:click="startTest(testID)">Start Test</a>
+    <a class="waves-effect waves-light btn-flat" v-on:click="initTest(testID)">Start Test</a>
   </div>
-  <div v-if="startTest">
+  <div v-if="testInstructions">
     <p>Start Test: {{testID}}</p>
     <p>Test Instructions here</p>
-    <a class="waves-effect waves-light btn-flat" v-on:click="startTestNext(testID)">Next</a>
+    <a class="waves-effect waves-light btn-flat" v-on:click="startTest(testID)">Next</a>
   </div>
 </div>
 </template>
@@ -16,8 +16,8 @@ export default {
   data () {
     return {
       testID: '',
-      initTest: true,
-      startTest: false
+      generalInstructions: true,
+      testInstructions: false
     }
   },
   created () {
@@ -28,13 +28,14 @@ export default {
       this.testID = this.$route.params.test_id;
 
     },
-  	startTest: function (testID) {
-      this.initTest = false;
-      this.startTest = true;
+  	initTest: function (testID) {
+      this.generalInstructions = false;
+      this.testInstructions = true;
+      
     },
-    startTestNext: function (testID) {
+    startTest: function (testID) {
         //start recorder
-        
+
     }
   }
 }
