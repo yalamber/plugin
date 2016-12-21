@@ -2,12 +2,12 @@
 <div>
   <div v-if="initTest">
     <p>General Instructions for test: {{testID}}</p>
-    <a class="waves-effect waves-light btn-flat" v-on:click="startTest(test.id)">Start Test</a>
+    <a class="waves-effect waves-light btn-flat" v-on:click="startTest(testID)">Start Test</a>
   </div>
   <div v-if="startTest">
     <p>Start Test: {{testID}}</p>
     <p>Test Instructions here</p>
-    <a class="waves-effect waves-light btn-flat" v-on:click="startTestNext(test.id)">Next</a>
+    <a class="waves-effect waves-light btn-flat" v-on:click="startTestNext(testID)">Next</a>
   </div>
 </div>
 </template>
@@ -34,6 +34,7 @@ export default {
     },
     startTestNext: function (testID) {
         //start recorder
+        
     }
   }
 }
