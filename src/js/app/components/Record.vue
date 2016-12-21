@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button :disabled="isRecording" v-on:click="record">Start</button>
     <button :disabled="isPausing" v-on:click="pause">{{pauseText}}</button>
     <button :disabled="isStopping" v-on:click="stop">Stop</button>
     <div>{{errorMessage}}</div>
@@ -10,7 +9,7 @@
 
 
 <script>
-const DESKTOP_MEDIA = ['screen'];
+const DESKTOP_MEDIA = ['screen', 'audio'];
 export default {
   data () {
     return {
@@ -35,6 +34,7 @@ export default {
   methods: {
         record: function(event) {
             //open testing site
+            var self = this;
             chrome.windows.create({'url': 'http://example.com', 'type': 'normal'}, function (window) {
                 //get current window and update properties
                 chrome.windows.getCurrent(function (window) {
@@ -43,19 +43,20 @@ export default {
                         height: 200,
                         left: screen.width - 300
                     });
+                    console.log('start recording clicked');
+                    if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
+                        alert('MediaRecorder not supported on your browser, use Firefox 30 or Chrome 49 instead.');
+                    } else {
+                        //ask for desktop permissions
+                        self.pending_request_id = chrome.desktopCapture.chooseDesktopMedia(
+                            DESKTOP_MEDIA, self.onAccessApproved);
+                        self.isRecording = true;
+                        self.isStopping = false;
+                        self.isPausing = false;
+                    }
                 });    
             });
-            console.log('start recording clicked');
-            if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
-                alert('MediaRecorder not supported on your browser, use Firefox 30 or Chrome 49 instead.');
-            } else {
-                //ask for desktop permissions
-                this.pending_request_id = chrome.desktopCapture.chooseDesktopMedia(
-                    DESKTOP_MEDIA, this.onAccessApproved);
-                this.isRecording = true;
-                this.isStopping = false;
-                this.isPausing = false;
-            }
+            
         },
         pause: function(event) {
             if (this.pauseText === "Pause") {
@@ -124,6 +125,9 @@ export default {
                 console.log('start recording call');
                 this.startRecording(this.mux_stream);
             }
+            stream.getVideoTracks()[0].onended = function () {
+                console.log('test');
+            };
         },
         handleError: function(error) {
             if (error.name === 'ConstraintNotSatisfiedError') {
@@ -181,6 +185,10 @@ export default {
             };
 
             this.mediaRecorder.onstop = function() {
+                console.log(that.pending_request_id);
+                
+                chrome.desktopCapture.cancelChooseDesktopMedia(that.pending_request_id);
+                
                 console.log('Stopped  & state = ' + that.mediaRecorder.state);
 
                 var blob = new Blob(that.chunks, { type: "video/webm" });

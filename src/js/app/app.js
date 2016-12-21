@@ -16,11 +16,12 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    { path: '/', component: Dashboard },
-    { path: '/login', component: Login },
+    { path: '/', component: Login },
+    { path: '/dashboard', component: Dashboard },
     { path: '/screening/:test_id', component: Screening },
     { path: '/test/:test_id', component: Test },
     { path: '/record/:test_id', component: Record },
+    { path: '*', redirect: '/' }
   ]
 })
 
@@ -29,8 +30,5 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  created: function () {
-    this.$router.push('/login');
-  },
   render: h => h(App)
 });
