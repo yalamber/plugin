@@ -34,8 +34,12 @@ export default {
       
     },
     startTest: function (testID) {
-        //start recorder
-
+      //start recorder
+      //open url
+      chrome.windows.create({'url': 'http://example.com', 'type': 'normal'}, function(window) {
+        //open recorder window
+        this.$router.push('/record/'+testID);
+      });
     }
   }
 }

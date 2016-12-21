@@ -29,6 +29,9 @@ export default {
         fileName: null
     }
   },
+  mounted () {
+      this.record();
+  },
   methods: {
         record: function(event) {
             console.log('start recording clicked');
