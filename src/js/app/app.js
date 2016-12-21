@@ -4,6 +4,8 @@ import VueResource from 'vue-resource';
 import App from './components/App.vue'
 import Dashboard from './components/Dashboard.vue'
 import Login from './components/Login.vue'
+import Screening from './components/Screening.vue'
+import Test from './components/Test.vue'
 import Record from './components/Record.vue'
 
 Vue.use(VueRouter)
@@ -16,6 +18,8 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Dashboard },
     { path: '/login', component: Login },
+    { path: '/screening/:test_id', component: Screening },
+    { path: '/test/:test_id', component: Test },
     { path: '/record', component: Record },
   ]
 })
@@ -26,4 +30,4 @@ new Vue({
   el: '#app',
   router,
   render: h => h(App)
-})
+});
