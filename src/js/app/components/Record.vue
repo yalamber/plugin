@@ -34,6 +34,13 @@ export default {
   },
   methods: {
         record: function(event) {
+            //open testing site
+            chrome.windows.create({'url': 'http://example.com', 'type': 'normal'}, function (window) {
+                //get current window and update properties
+                chrome.windows.getCurrent(function (window) {
+                    chrome.windows.update(window.id, { width: 300, height: 150, type: 'panel' });
+                });    
+            });
             console.log('start recording clicked');
             if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
                 alert('MediaRecorder not supported on your browser, use Firefox 30 or Chrome 49 instead.');
