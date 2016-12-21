@@ -38,7 +38,10 @@ export default {
             chrome.windows.create({'url': 'http://example.com', 'type': 'normal'}, function (window) {
                 //get current window and update properties
                 chrome.windows.getCurrent(function (window) {
-                    chrome.windows.update(window.id, { width: 300, height: 150, type: 'panel' });
+                    chrome.windows.update(window.id, { 
+                        width: 300, 
+                        height: 150
+                    });
                 });    
             });
             console.log('start recording clicked');
