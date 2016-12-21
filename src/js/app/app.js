@@ -29,5 +29,8 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  created: function () {
+    this.$router.push('/login');
+  },
   render: h => h(App)
 });
